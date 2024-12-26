@@ -19,3 +19,6 @@
 # Some intersting things and side reaserche:
     CSRF [Cross-side Request Forgery]
         we use CSRF tokens to protect from porgery
+
+    DataFixtures:
+        used to add in the DB fake data for testing .

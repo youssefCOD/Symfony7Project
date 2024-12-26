@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add a new Post{% endblock %}
+
+{% block body %}
+    {{ form_start(Form)}}
+        {{ form_row(Form.title)}}
+        {{ form_row(Form.content)}}
+        {{ form_row(Form.featuredImage)}}
+        {{ form_row(Form.categories)}}
+        {{ form_row(Form.keywords)}}
+        <button type="submit">Add</button>
+    {{form_end(Form)}}
+{% endblock %}
