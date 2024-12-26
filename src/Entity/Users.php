@@ -42,7 +42,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
-    private ?bool $isVerified = null;
+    private ?bool $isVerified = false;
 
     /**
      * @var Collection<int, Posts>
