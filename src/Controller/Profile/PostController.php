@@ -38,6 +38,7 @@ class PostController extends AbstractController
 
         //treating the form here
         $Form->handleRequest($request);
+
         if ($Form->isSubmitted() && $Form->isValid()) {
             $post->setSlug(strtolower(($slluger->slug($post->getTitle()))));
 
@@ -47,6 +48,9 @@ class PostController extends AbstractController
             $featuredImage = $Form->get('featuredImage')->getData();
             $image = $pictureService->square($featuredImage,'posts',300);
 
+            $post->setFeaturedImage($image);
+
+            
             $em->persist($post);
             $em->flush();
 
