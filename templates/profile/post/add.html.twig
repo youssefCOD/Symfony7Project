@@ -2,11 +2,19 @@
 
 {% block title %}Add a new Post{% endblock %}
 
+{% block importmap%}
+    {{ importmap(['app', 'add-post']) }}
+{% endblock %}
+
+
 {% block body %}
     {{ form_start(Form)}}
         {{ form_row(Form.title)}}
         {{ form_row(Form.content)}}
         {{ form_row(Form.featuredImage)}}
+        <div class="preview">
+            <img src="" alt="" width="200">
+        </div>
         {{ form_row(Form.categories)}}
         {{ form_row(Form.keywords)}}
         <button type="submit">Add</button>
