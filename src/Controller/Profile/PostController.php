@@ -5,6 +5,7 @@ namespace App\Controller\Profile;
 use App\Entity\Posts;
 use App\Form\AddPostFormType;
 use App\Repository\UsersRepository;
+use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,8 @@ class PostController extends AbstractController
         Request $request ,
         SluggerInterface $slluger,
         EntityManagerInterface $em ,
-        UsersRepository $usersRepository
+        UsersRepository $usersRepository ,
+        PictureService $pictureService
     ): Response
     {
         $post = new Posts();
@@ -39,9 +41,11 @@ class PostController extends AbstractController
         if ($Form->isSubmitted() && $Form->isValid()) {
             $post->setSlug(strtolower(($slluger->slug($post->getTitle()))));
 
-            $post->setUsers($usersRepository->find(4));
+            $post->setUsers($this->getUser());
 
-            $post->setFeaturedImage('deafualt.webp');
+            //adding the image here:
+            $featuredImage = $Form->get('featuredImage')->getData();
+            $image = $pictureService->square($featuredImage,'posts',300);
 
             $em->persist($post);
             $em->flush();

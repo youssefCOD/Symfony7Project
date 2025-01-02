@@ -44,7 +44,7 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                     new PasswordStrength(
-                        minScore: PasswordStrength::STRENGTH_VERY_WEAK
+                        minScore: PasswordStrength::STRENGTH_WEAK
                     )
                 ],
             ])

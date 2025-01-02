@@ -33,14 +33,11 @@ class AddPostFormType extends AbstractType
                 'label' => 'Image of the post' ,
                 'constraints' => [
                     new Image(
-                        minWidth:200,
-                        maxWidth:4000,
-                        minHeight:200,
-                        maxHeight:400,
+
                         allowPortrait:false,
                         mimeTypes:[
-                            'images/jpeg',
-                            'images/png'
+                            'image/jpeg',
+                            'image/png'
                         ]
                     )
                 ]
