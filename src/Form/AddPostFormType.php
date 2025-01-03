@@ -39,7 +39,8 @@ class AddPostFormType extends AbstractType
                         allowPortrait:false,
                         mimeTypes:[
                             'image/jpeg',
-                            'image/png'
+                            'image/png',
+                            'image/webp'
                         ]
                     )
                 ]

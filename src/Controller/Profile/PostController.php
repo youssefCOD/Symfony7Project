@@ -49,7 +49,6 @@ class PostController extends AbstractController
             $image = $pictureService->square($featuredImage,'posts',300);
 
             $post->setFeaturedImage($image);
-
             
             $em->persist($post);
             $em->flush();
