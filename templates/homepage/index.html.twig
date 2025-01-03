@@ -9,6 +9,7 @@
             {% for category in lastPost.categories %}
                 <span class="badge badge-primary">{{ category.name }}</span>
             {% endfor %}
+            <h2><a href="{{ path('app_posts_details', {slug: lastPost.slug}) }}">{{ lastPost.title }}</a></h2>
             <p>{{ lastPost.users.nickname }}</p>
         </div>
         <h2>{{lastPost.title}}</h2>
@@ -25,6 +26,7 @@
                             {% for category in post.categories %}
                                 <span class="badge badge-primary">{{ category.name }}</span>
                             {% endfor %}
+                            <h3><a href="{{ path('app_posts_details', {slug: post.slug}) }}">{{ post.title }}</a></h3>
                             <p>{{ post.users.nickname }}</p>
                         </div>
                         <h2>{{post.title}}</h2>
