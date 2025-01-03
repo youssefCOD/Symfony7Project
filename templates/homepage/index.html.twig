@@ -1,45 +1,112 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
-
+{% block title %}Home{% endblock %}
+{% set color_hash = "
+        function colorHash(str) {
+            var hash = 0;
+            for (var i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            var hue = hash % 360;
+            return 'hsl(' + hue + ', 70%, 60%)';
+        }
+    " %}
 {% block body %}
-    <header class="hero">
-        <img src="{{ asset('uploads/posts/') ~ lastPost.featuredImage }}" alt="{{ lastPost.title }}">
-        <div class="card-body">
-            {% for category in lastPost.categories %}
-                <span class="badge badge-primary">{{ category.name }}</span>
-            {% endfor %}
-            <h2><a href="{{ path('app_posts_details', {slug: lastPost.slug}) }}">{{ lastPost.title }}</a></h2>
-            <p>{{ lastPost.users.nickname }}</p>
-        </div>
-        <h2>{{lastPost.title}}</h2>
-    </header>
-    <div class="clear"></div>
-    <main class="container">
-        <section>
-            <h2 class="text-center my-5">Derniers articles</h2>
-            <div class="grid">
-                {% for post in posts %}
-                    <article class="card">
-                        <img src="{{ asset('uploads/posts/mini/300x300-') ~ post.featuredImage }}" alt="{{ post.title }}">
-                        <div class="card-body">
-                            {% for category in post.categories %}
-                                <span class="badge badge-primary">{{ category.name }}</span>
-                            {% endfor %}
-                            <h3><a href="{{ path('app_posts_details', {slug: post.slug}) }}">{{ post.title }}</a></h3>
-                            <p>{{ post.users.nickname }}</p>
-                        </div>
-                        <h2>{{post.title}}</h2>
-                    </article>
-                {% endfor %}                
+<div class="bg-gray-50 min-h-screen">
+    <!-- Hero Section -->
+    <header class="relative h-[500px] mb-12">
+        <img src="{{ asset('uploads/posts/') ~ lastPost.featuredImage }}" 
+             alt="{{ lastPost.title }}" 
+             class="w-full h-full object-cover rounded-lg shadow-xl">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black flex flex-col justify-end">
+            <div class="container mx-auto px-6 py-8 text-white">
+                <div class="flex items-center space-x-3 mb-4">
+                    {% for category in lastPost.categories %}
+                        <span class="px-3 py-1 bg-blue-600 text-xs font-semibold rounded-full shadow-md hover:bg-blue-700 transition">
+                            {{ category.name }}
+                        </span>
+                    {% endfor %}
+                </div>
+                <h1 class="text-5xl font-extrabold leading-snug mb-4">
+                    <a href="{{ path('app_posts_details', {slug: lastPost.slug}) }}" 
+                       class="hover:underline hover:text-gray-300 transition">
+                        {{ lastPost.title }}
+                    </a>
+                </h1>
+                <p class="text-md font-light">By {{ lastPost.users.nickname }}</p>
             </div>
+        </div>
+    </header>
 
+    <!-- Main Content -->
+    <main class="container mx-auto px-6">
+        <!-- Latest Posts Section -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 border-b pb-2 border-gray-200">Latest Posts</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for post in posts %}
+                    <article class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:scale-105 duration-300">
+                        <img src="{{ asset('uploads/posts/mini/300x300-') ~ post.featuredImage }}" 
+                             alt="{{ post.title }}" 
+                             class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center space-x-2 mb-4">
+                                {% for category in post.categories %}
+                                    <span class="px-2 py-1 bg-blue-500 text-white text-xs font-medium rounded-full">{{ category.name }}</span>
+                                {% endfor %}
+                            </div>
+                            <h3 class="text-xl font-semibold mb-4">
+                                <a href="{{ path('app_posts_details', {slug: post.slug}) }}" 
+                                   class="hover:text-blue-600 transition">
+                                    {{ post.title }}
+                                </a>
+                            </h3>
+                            <p class="text-sm text-gray-600">By {{ post.users.nickname }}</p>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
         </section>
-         <section>
-            <h2>Auteurs actifs</h2>
-            {% for user in users %}
-                <h3>{{ user[0].nickname }} {{user.total}}</h3>
-            {% endfor %}
+       
+        <!-- Suggested for You Section -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 pb-2 border-b border-gray-200 text-deep-navy">Suggested for You</h2>
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {% for user in users %}
+                        <div class="flex flex-col items-center user-card" data-nickname="{{ user[0].nickname }}">
+                            <div class="w-16 h-16 rounded-full mb-3 shadow-md flex items-center justify-center user-icon">
+                                <span class="text-2xl font-bold text-white">{{ user[0].nickname|first|upper }}</span>
+                            </div>
+                            <h3 class="text-sm font-semibold text-gray-800">{{ user[0].nickname }}</h3>
+                            <p class="text-xs text-rich-burgundy">{{ user.total }} posts</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </section>
     </main>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const hashColor = (str) => {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            let color = "#";
+            for (let i = 0; i < 3; i++) {
+                const value = (hash >> (i * 8)) & 0xFF;
+                color += ("00" + value.toString(16)).substr(-2);
+            }
+            return color;
+        };
+
+        document.querySelectorAll(".user-card").forEach(card => {
+            const nickname = card.dataset.nickname;
+            const icon = card.querySelector(".user-icon");
+            icon.style.backgroundColor = hashColor(nickname);
+        });
+    });
+</script>
 {% endblock %}

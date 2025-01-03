@@ -12,16 +12,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use App\Repository\PostsRepository;
 
 #[Route('/profile/post', name: 'app_profile_post_')]
 class PostController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
+    public function index(PostsRepository $postsRepository): Response
     {
-        return $this->render('profile\post\index.html.twig', [
-            'controller_name' => 'PostController',
-        ]);
+        $posts = $postsRepository->findBy([], ['id' => 'desc'], 8);
+
+        return $this->render('profile\post\index.html.twig', compact('posts'));
     }
     #[Route('/add', name: 'add')]
     public function addPost(

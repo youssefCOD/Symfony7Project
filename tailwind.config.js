@@ -5,7 +5,13 @@ module.exports = {
     "./templates/**/*.html.twig",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'luxury-gold': 'var(--color-elegant-cream)',
+        // ... other custom colors
+      },
+     
+      },
   },
   plugins: [],
 }

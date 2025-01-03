@@ -3,11 +3,136 @@
 @tailwind utilities;
 
 
-body {
-    background-color: skyblue;
-}
-
 
 .preview {
     display: none;
 }
+
+/* Custom color palette */
+:root {
+    --color-luxury-gold: #F4C430; /* Modernized Gold */
+    --color-deep-navy: #1C1F4A; /* Deep Sapphire Blue */
+    --color-rich-burgundy: #5A1F35; /* Deep Merlot */
+    --color-elegant-cream: #FAF3E0; /* Soft Ivory */
+    --color-dark-gray: #2C2C2C; /* Charcoal Gray */
+    --color-light-gray: #ECECEC; /* Platinum Gray */
+}
+  
+  /* Global styles */
+  body {
+    background: linear-gradient(to bottom right, var(--color-light-gray), #FFFFFF);
+    font-family: 'Arial', sans-serif;
+    color: var(--color-dark-gray);
+    line-height: 1.6;
+    margin: 0;
+    min-height: 100vh;
+  }
+  
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Georgia', serif;
+    color: var(--color-deep-navy);
+    margin-bottom: 0.5em;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  a {
+    color: var(--color-deep-navy);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: var(--color-luxury-gold);
+  }
+  
+  /* Luxury components */
+  .btn-luxury {
+    background: linear-gradient(to right, var(--color-luxury-gold), #FFC640, var(--color-luxury-gold));
+    color: white;
+    padding: 12px 24px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-luxury:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-luxury {
+    background-color: white;
+    border: 2px solid var(--color-luxury-gold);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header styles */
+  .header-luxury {
+    background-color: var(--color-deep-navy);
+    color: white;
+    padding: 1em 0;
+  }
+  
+  .nav-luxury {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .nav-luxury ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-luxury a {
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Existing styles */
+  .preview {
+    display: none;
+  }
+  
+  /* Additional global styles for luxury feel */
+  .text-gold {
+    color: var(--color-luxury-gold);
+  }
+  
+  .bg-cream {
+    background-color: var(--color-elegant-cream);
+  }
+  
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--color-light-gray);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--color-luxury-gold), #FFC640);
+    border-radius: 6px;
+  }
+  
+  /* Luxury-themed selection color */
+  ::selection {
+    background-color: var(--color-luxury-gold);
+    color: white;
+  }
