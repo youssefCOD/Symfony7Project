@@ -1,24 +1,93 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}{{ post.title }}{% endblock %}
-
 {% block body %}
-    <header class="post-details-header">
-        <img src="{{ asset('uploads/posts/') ~ post.featuredImage }}" alt="{{ post.title }}">
-        <div class="hero-content">
-            {% for category in post.categories %}
-                <span class="badge badge-primary badge-lg">{{ category.name }}</span>
-            {% endfor %}
-            <h2>{{ post.title }}</h2>
-            {# <div class="post-content">{{ lastPost.content }}</div> #}
-            <p>{{ post.users.nickname }}</p>
+<article class="min-h-screen bg-gradient-to-b from-purple-50 via-white to-pink-50">
+    <!-- Hero Section -->
+    <header class="relative w-full">
+        <!-- Featured Image Container -->
+        <div class="relative h-[60vh] max-h-[600px] w-full overflow-hidden">
+            <!-- Gradient Overlay -->
+            <div class="absolute inset-0"></div>
+            <img 
+                src="{{ asset('uploads/posts/') ~ post.featuredImage }}" 
+                alt="{{ post.title }}"
+                class="w-full h-full object-cover z-0"
+            >
+            <!-- Overlay Content -->
+            <div class="absolute bottom-0 left-0 right-0 p-8 text-white max-w-4xl mx-auto z-20">
+                <!-- Categories -->
+                <div class="flex gap-3 mb-6">
+                    {% for category in post.categories %}
+                        <span class="px-4 py-1.5 text-sm bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full shadow-md">
+                            {{ category.name }}
+                        </span>
+                    {% endfor %}
+                </div>
+
+                <!-- Title -->
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight text-shadow-lg">
+                    {{ post.title }}
+                </h1>
+            </div>
         </div>
     </header>
 
-    <main class="container">
-        <div class="post-content">
-            {{ post.content|raw }}
+    <!-- Decorative Separation -->
+    <div class="relative">
+        <div class="absolute inset-x-0 -top-6 transform -translate-y-1/2">
+            <svg class="w-full h-8 text-white" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+                <path fill="currentColor" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,192C384,203,480,245,576,240C672,235,768,181,864,154.7C960,128,1056,128,1152,138.7C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="relative -mt-12 bg-white rounded-t-3xl px-4 shadow-lg">
+        <div class="max-w-2xl mx-auto pt-12 pb-20">
+            <!-- Article Content -->
+            <div class="prose prose-lg mx-auto text-gray-800">
+                <!-- Vibrant Typography Styles -->
+                <style>
+                    .prose h2 {
+                        @apply text-3xl font-extrabold text-purple-700 mt-12 mb-6;
+                    }
+                    .prose p {
+                        @apply text-gray-700 leading-relaxed mb-6;
+                    }
+                    .prose img {
+                        @apply rounded-2xl my-8;
+                    }
+                    .prose a {
+                        @apply text-pink-600 font-medium no-underline hover:underline;
+                    }
+                    .prose blockquote {
+                        @apply border-l-4 border-purple-300 pl-6 italic text-gray-700 bg-purple-50 p-4 rounded-lg;
+                    }
+                    .prose ul {
+                        @apply space-y-3 list-disc pl-5;
+                    }
+                    .prose li {
+                        @apply text-gray-700;
+                    }
+                </style>
+                {{ post.content|raw }}
+            </div>
+
+            <!-- Author Info -->
+            <div class="mt-16 pt-8 border-t border-gray-200">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
+                        <span class="text-white text-xl font-bold">
+                            {{ post.users.nickname|slice(0,1)|upper }}
+                        </span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-lg text-gray-900">{{ post.users.nickname }}</p>
+                        <p class="text-sm text-gray-600">Contributing Writer</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
+</article>
 {% endblock %}
-
