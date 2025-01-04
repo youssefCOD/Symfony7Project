@@ -7,140 +7,156 @@
 {% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black py-8">
-    <div class="max-w-4xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8 px-4 text-center">
-            <h1 class="text-4xl font-bold text-white">Create a New Story</h1>
-            <p class="text-neon-green-light mt-2">Share your thoughts with the world</p>
+    {% if  app.user %}
+        <div class="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black py-8">
+            <div class="max-w-4xl mx-auto">
+                <!-- Header -->
+                <div class="mb-8 px-4 text-center">
+                    <h1 class="text-4xl font-bold text-white">Create a New Story</h1>
+                    <p class="text-neon-green-light mt-2">Share your thoughts with the world</p>
+                </div>
+
+                <!-- Form Container -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl shadow-md p-8 mx-4 border border-neon-green/50">
+                    {{ form_start(Form, {'attr': {'class': 'space-y-8'}}) }}
+                        
+                        <!-- Title Input -->
+                        <div class="space-y-2">
+                            {{ form_label(Form.title, 'Title', {'label_attr': {'class': 'block text-lg font-medium text-neon-green-light'}}) }}
+                            {{ form_widget(Form.title, {'attr': {
+                                'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green',
+                                'placeholder': '             Write a captivating title...'
+                            }}) }}
+                        </div>
+
+                        <!-- Featured Image -->
+                        <div class="space-y-2">
+                            {{ form_label(Form.featuredImage, 'Cover Image', {'label_attr': {'class': 'block text-lg font-medium text-neon-green-light'}}) }}
+                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-700 border-dashed rounded-lg hover:border-neon-green transition-all">
+                                <div class="space-y-2 text-center">
+                                    <div class="preview mb-4">
+                                        <img src="" alt="" class="mx-auto max-h-64 rounded-lg hidden">
+                                    </div>
+                                    <div class="flex text-sm text-neon-green-light">
+                                        <label class="relative cursor-pointer bg-gray-700 rounded-md font-medium text-neon-green hover:text-neon-green-light focus-within:outline-none">
+                                            {{ form_widget(Form.featuredImage, {'attr': {
+                                                'class': 'sr-only',
+                                                'onchange': 'previewImage(event)'
+                                            }}) }}
+                                            <span>Upload a file</span>
+                                        </label>
+                                        <p class="pl-1">or drag and drop</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Content Editor -->
+                        <div class="space-y-2">
+                            {{ form_label(Form.content, 'Story', {'label_attr': {'class': 'block text-lg font-medium text-neon-green-light'}}) }}
+                            {{ form_widget(Form.content, {'attr': {
+                                'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green min-h-[200px]',
+                                'placeholder': 'Tell your story...'
+                            }}) }}
+                        </div>
+
+                        <!-- Section Divider -->
+                        <div class="relative py-6">
+                            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                                <div class="w-full border-t border-gray-700"></div>
+                            </div>
+                            <div class="relative flex justify-center">
+                                <span class="bg-gray-900 px-3 text-sm text-neon-green font-medium">Categorize Your Story</span>
+                            </div>
+                        </div>
+
+                        <!-- Categories Section -->
+                        <div class="space-y-2 p-6 bg-gray-900 rounded-xl border border-gray-700 hover:bg-gray-800/80 transition-all duration-300">
+                            <div class="flex items-center justify-between mb-2">
+                                {{ form_label(Form.categories, 'Topics', {
+                                    'label_attr': {
+                                        'class': 'block text-lg font-medium text-neon-green-light'
+                                    }
+                                }) }}
+                                <span class="text-sm text-gray-400">Choose relevant topics for your story</span>
+                            </div>
+                            <div class="relative group">
+                                {{ form_widget(Form.categories, {
+                                    'attr': {
+                                        'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green hover:border-neon-green transition-colors',
+                                        'data-placeholder': 'Select categories'
+                                    }
+                                }) }}
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400 group-hover:text-neon-green">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tags Section -->
+                        <div class="space-y-2 p-6 bg-gray-900 rounded-xl mt-6 border border-gray-700 hover:bg-gray-800/80 transition-all duration-300">
+                            <div class="flex items-center justify-between mb-2">
+                                {{ form_label(Form.keywords, 'Tags', {
+                                    'label_attr': {
+                                        'class': 'block text-lg font-medium text-neon-green-light'
+                                    }
+                                }) }}
+                                <span class="text-sm text-gray-400">Add up to 5 tags</span>
+                            </div>
+                            <div class="relative group">
+                                {{ form_widget(Form.keywords, {
+                                    'attr': {
+                                        'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green hover:border-neon-green transition-colors',
+                                        'placeholder': 'e.g., technology, programming, design'
+                                    }
+                                }) }}
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="flex justify-end pt-4">
+                            <button type="submit" class="px-6 py-3 bg-gradient-to-r from-neon-green to-green-600 text-white font-medium rounded-lg shadow-sm hover:from-green-500 hover:to-neon-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neon-green transition-all">
+                                Publish Story
+                            </button>
+                        </div>
+
+                    {{ form_end(Form) }}
+                </div>
+            </div>
         </div>
 
-        <!-- Form Container -->
-        <div class="bg-gray-800 bg-opacity-50 rounded-xl shadow-md p-8 mx-4 border border-neon-green/50">
-            {{ form_start(Form, {'attr': {'class': 'space-y-8'}}) }}
+        <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                const preview = document.querySelector('.preview img');
                 
-                <!-- Title Input -->
-                <div class="space-y-2">
-                    {{ form_label(Form.title, 'Title', {'label_attr': {'class': 'block text-lg font-medium text-neon-green-light'}}) }}
-                    {{ form_widget(Form.title, {'attr': {
-                        'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green',
-                        'placeholder': '             Write a captivating title...'
-                    }}) }}
-                </div>
-
-                <!-- Featured Image -->
-                <div class="space-y-2">
-                    {{ form_label(Form.featuredImage, 'Cover Image', {'label_attr': {'class': 'block text-lg font-medium text-neon-green-light'}}) }}
-                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-700 border-dashed rounded-lg hover:border-neon-green transition-all">
-                        <div class="space-y-2 text-center">
-                            <div class="preview mb-4">
-                                <img src="" alt="" class="mx-auto max-h-64 rounded-lg hidden">
-                            </div>
-                            <div class="flex text-sm text-neon-green-light">
-                                <label class="relative cursor-pointer bg-gray-700 rounded-md font-medium text-neon-green hover:text-neon-green-light focus-within:outline-none">
-                                    {{ form_widget(Form.featuredImage, {'attr': {
-                                        'class': 'sr-only',
-                                        'onchange': 'previewImage(event)'
-                                    }}) }}
-                                    <span>Upload a file</span>
-                                </label>
-                                <p class="pl-1">or drag and drop</p>
-                            </div>
-                            <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Content Editor -->
-                <div class="space-y-2">
-                    {{ form_label(Form.content, 'Story', {'label_attr': {'class': 'block text-lg font-medium text-neon-green-light'}}) }}
-                    {{ form_widget(Form.content, {'attr': {
-                        'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green min-h-[200px]',
-                        'placeholder': 'Tell your story...'
-                    }}) }}
-                </div>
-
-                <!-- Section Divider -->
-                <div class="relative py-6">
-                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                        <div class="w-full border-t border-gray-700"></div>
-                    </div>
-                    <div class="relative flex justify-center">
-                        <span class="bg-gray-900 px-3 text-sm text-neon-green font-medium">Categorize Your Story</span>
-                    </div>
-                </div>
-
-                <!-- Categories Section -->
-                <div class="space-y-2 p-6 bg-gray-900 rounded-xl border border-gray-700 hover:bg-gray-800/80 transition-all duration-300">
-                    <div class="flex items-center justify-between mb-2">
-                        {{ form_label(Form.categories, 'Topics', {
-                            'label_attr': {
-                                'class': 'block text-lg font-medium text-neon-green-light'
-                            }
-                        }) }}
-                        <span class="text-sm text-gray-400">Choose relevant topics for your story</span>
-                    </div>
-                    <div class="relative group">
-                        {{ form_widget(Form.categories, {
-                            'attr': {
-                                'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green hover:border-neon-green transition-colors',
-                                'data-placeholder': 'Select categories'
-                            }
-                        }) }}
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400 group-hover:text-neon-green">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tags Section -->
-                <div class="space-y-2 p-6 bg-gray-900 rounded-xl mt-6 border border-gray-700 hover:bg-gray-800/80 transition-all duration-300">
-                    <div class="flex items-center justify-between mb-2">
-                        {{ form_label(Form.keywords, 'Tags', {
-                            'label_attr': {
-                                'class': 'block text-lg font-medium text-neon-green-light'
-                            }
-                        }) }}
-                        <span class="text-sm text-gray-400">Add up to 5 tags</span>
-                    </div>
-                    <div class="relative group">
-                        {{ form_widget(Form.keywords, {
-                            'attr': {
-                                'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green hover:border-neon-green transition-colors',
-                                'placeholder': 'e.g., technology, programming, design'
-                            }
-                        }) }}
-                    </div>
-                </div>
-
-                <!-- Submit Button -->
-                <div class="flex justify-end pt-4">
-                    <button type="submit" class="px-6 py-3 bg-gradient-to-r from-neon-green to-green-600 text-white font-medium rounded-lg shadow-sm hover:from-green-500 hover:to-neon-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neon-green transition-all">
-                        Publish Story
-                    </button>
-                </div>
-
-            {{ form_end(Form) }}
-        </div>
-    </div>
-</div>
-
-<script>
-function previewImage(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        const preview = document.querySelector('.preview img');
-        
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-            preview.classList.remove('hidden');
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                }
+                
+                reader.readAsDataURL(file);
+            }
         }
-        
-        reader.readAsDataURL(file);
-    }
-}
-</script>
+        </script>
+    {% else %}
+        <div class="min-h-screen flex items-center justify-center bg-black">
+            <div class="text-center text-white bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold">You need to be logged in to add a story</h2>
+                <p class="mt-4">Please log in to continue.</p>
+                <p class="text-sm text-gray-400 mt-2">Redirecting you to the login page...</p>
+            </div>
+        </div>
+
+        <script>
+            setTimeout(function() {
+                window.location.href = "{{ path('app_login') }}";  // Redirect to login page
+            }, 3000);  // Wait for 3 seconds before redirecting
+        </script>
+    {% endif %}
 {% endblock %}
