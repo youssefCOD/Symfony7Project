@@ -63,5 +63,51 @@ class PostController extends AbstractController
             'Form' => $Form
         ]);    
     }
+
+
+    // routes for deleting and updating 
+    #[Route('/update/{id}', name: 'update')]
+    public function editPost(
+        Request $request,
+        Posts $post,
+        EntityManagerInterface $em,
+        PictureService $pictureService
+    ): Response {
+        $form = $this->createForm(AddPostFormType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $newImage = $form->get('featuredImage')->getData();
+            if ($newImage) {
+                $imageFilename = $pictureService->square($newImage, 'posts', 300);
+                $post->setFeaturedImage($imageFilename);
+            }
+        
+            $em->persist($post);
+            $em->flush();
+        
+            $this->addFlash('success', 'Post updated successfully!');
+            return $this->redirectToRoute('app_profile_post_index');
+        }
+
+        return $this->render('profile/post/edit.html.twig', [
+            'Form' => $form->createView(),
+            'post' => $post,
+        ]);
+    }
+
+
+    #[Route('/delete/{id}', name: 'delete', methods: ['POST'])]
+    public function deletePost(Posts $post, EntityManagerInterface $em): Response
+    {
+        // $this->denyAccessUnlessGranted('POST_DELETE', $post);
+
+        $em->remove($post);
+        $em->flush();
+
+        $this->addFlash('success', 'Post deleted successfully');
+        return $this->redirectToRoute('app_profile_post_index');
+    }
+
 }
 

@@ -26,11 +26,13 @@ class AddPostFormType extends AbstractType
                     new NotBlank()
                 ]    
             ])
+            
             ->add('content' , TextType::class , [
                 'label' => 'Content of the Post'
             ])
             ->add('featuredImage' ,FileType::class,[
                 'label' => 'Image of the post' ,
+                'mapped' => false, // Prevent automatic mapping to the entity
                 'attr' => [
                     'accept' => 'image/png , image/jpeg , image/webp'
                 ],
