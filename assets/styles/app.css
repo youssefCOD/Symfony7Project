@@ -4,51 +4,62 @@
 
 
 
-.preview {
-    display: none;
-}
+  .preview {
+      display: none;
+  }
 
-/* Custom color palette */
-:root {
-    --color-luxury-gold: #F4C430; /* Modernized Gold */
-    --color-deep-navy: #1C1F4A; /* Deep Sapphire Blue */
-    --color-rich-burgundy: #5A1F35; /* Deep Merlot */
-    --color-elegant-cream: #FAF3E0; /* Soft Ivory */
-    --color-dark-gray: #2C2C2C; /* Charcoal Gray */
-    --color-light-gray: #ECECEC; /* Platinum Gray */
-}
-  
-  /* Global styles */
+  /* Custom color palette */
+  :root {
+      --color-luxury-gold: #F4C430; /* Modernized Gold */
+      --color-deep-navy: #1C1F4A; /* Deep Sapphire Blue */
+      --color-rich-burgundy: #5A1F35; /* Deep Merlot */
+      --color-elegant-cream: #FAF3E0; /* Soft Ivory */
+      --color-dark-gray: #2C2C2C; /* Charcoal Gray */
+      --color-light-gray: #ECECEC; /* Platinum Gray */
+  }
+    
+  :root {
+    --color-neon-green: #00ff99;
+    --color-dark-gray: #121212;
+    --color-light-gray: #1a1a1a;
+    --color-black: #000000;
+    --color-glow: rgba(0, 255, 153, 0.6);
+  }
+
   body {
-    background: linear-gradient(to bottom right, var(--color-light-gray), #FFFFFF);
-    font-family: 'Arial', sans-serif;
-    color: var(--color-dark-gray);
-    line-height: 1.6;
-    margin: 0;
-    min-height: 100vh;
+    background: linear-gradient(to bottom right, var(--color-light-gray), var(--color-black));
+    font-family: 'Orbitron', sans-serif;
+    color: var(--color-neon-green);
   }
-  
-  /* Typography */
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Georgia', serif;
-    color: var(--color-deep-navy);
-    margin-bottom: 0.5em;
-  }
-  
-  h1 {
-    font-size: 2.5em;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
+
   a {
-    color: var(--color-deep-navy);
+    color: var(--color-neon-green);
     text-decoration: none;
-    transition: color 0.3s ease;
+    position: relative;
   }
-  
+
   a:hover {
-    color: var(--color-luxury-gold);
+    text-shadow: 0 0 10px var(--color-neon-green), 0 0 20px var(--color-glow);
   }
+
+  button {
+    font-family: inherit;
+    color: var(--color-black);
+    background: var(--color-neon-green);
+    border: 2px solid var(--color-neon-green);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 15px var(--color-glow);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  button:hover {
+    background: var(--color-black);
+    color: var(--color-neon-green);
+    box-shadow: 0 0 30px var(--color-neon-green), 0 0 60px var(--color-glow);
+  }
+
   
   /* Luxury components */
   .btn-luxury {
@@ -135,4 +146,40 @@
   ::selection {
     background-color: var(--color-luxury-gold);
     color: white;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /* Custom Story Section styles */
+  .custom-story-section .block {
+    color: #4a4a4a; /* Neutral dark gray color for label */
+    font-family: 'Arial', sans-serif;
+  }
+
+  .custom-story-section .mt-1 {
+    border-color: #d1d5db; /* Neutral light gray border */
+    background-color: #ffffff; /* White background for input */
+    color: #333333; /* Dark gray text for input */
+  }
+
+  .custom-story-section .mt-1:focus {
+    border-color: #3b82f6; /* Light blue border on focus */
+    outline: none;
+  }
+
+  .custom-story-section .mt-1::placeholder {
+    color: #9ca3af; /* Light gray placeholder text */
+  }
+
+  /* Optional: A custom box shadow for a more modern feel */
+  .custom-story-section .mt-1 {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
   }

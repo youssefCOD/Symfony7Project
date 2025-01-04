@@ -19,11 +19,11 @@ class Comments
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\Column]
-    private ?bool $isReply = null;
+    // #[ORM\Column]
+    // private ?bool $isReply = null;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments')]
-    private ?self $comments = null;
+    // #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments')]
+    // private ?self $comments = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
@@ -35,7 +35,7 @@ class Comments
 
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
+        // $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -55,51 +55,51 @@ class Comments
         return $this;
     }
 
-    public function isReply(): ?bool
-    {
-        return $this->isReply;
-    }
+    // public function isReply(): ?bool
+    // {
+    //     return $this->isReply;
+    // }
 
-    public function setReply(bool $isReply): static
-    {
-        $this->isReply = $isReply;
+    // public function setReply(bool $isReply): static
+    // {
+    //     $this->isReply = $isReply;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getComments(): ?self
-    {
-        return $this->comments;
-    }
+    // public function getComments(): ?self
+    // {
+    //     return $this->comments;
+    // }
 
-    public function setComments(?self $comments): static
-    {
-        $this->comments = $comments;
+    // public function setComments(?self $comments): static
+    // {
+    //     $this->comments = $comments;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function addComment(self $comment): static
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setComments($this);
-        }
+    // public function addComment(self $comment): static
+    // {
+    //     if (!$this->comments->contains($comment)) {
+    //         $this->comments->add($comment);
+    //         $comment->setComments($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeComment(self $comment): static
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getComments() === $this) {
-                $comment->setComments(null);
-            }
-        }
+    // public function removeComment(self $comment): static
+    // {
+    //     if ($this->comments->removeElement($comment)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($comment->getComments() === $this) {
+    //             $comment->setComments(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getUsers(): ?Users
     {

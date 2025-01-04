@@ -2,8 +2,10 @@
 
 namespace App\Controller\Profile;
 
+use App\Entity\Comments;
 use App\Entity\Posts;
 use App\Form\AddPostFormType;
+use App\Form\CommentType;
 use App\Repository\UsersRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -62,3 +64,4 @@ class PostController extends AbstractController
         ]);    
     }
 }
+

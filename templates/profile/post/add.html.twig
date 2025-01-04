@@ -4,37 +4,37 @@
     {{ importmap(['app', 'add-post', 'ckeditor-init']) }}
 {% endblock %}
 {% block body %}
-<div class="min-h-screen bg-gray-50 py-8">
+<div class="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black py-8">
     <div class="max-w-4xl mx-auto">
         <!-- Header -->
-        <div class="mb-8 px-4">
-            <h1 class="text-3xl font-bold text-gray-900">Create a New Story</h1>
-            <p class="text-gray-600 mt-2">Share your thoughts with the world</p>
+        <div class="mb-8 px-4 text-center">
+            <h1 class="text-4xl font-bold text-white">Create a New Story</h1>
+            <p class="text-neon-green-light mt-2">Share your thoughts with the world</p>
         </div>
 
         <!-- Form Container -->
-        <div class="bg-white rounded-xl shadow-sm p-6 mx-4">
+        <div class="bg-gray-800 bg-opacity-50 rounded-xl shadow-md p-8 mx-4 border border-neon-green/50">
             {{ form_start(Form, {'attr': {'class': 'space-y-8'}}) }}
                 
                 <!-- Title Input -->
                 <div class="space-y-2">
-                    {{ form_label(Form.title, 'Title', {'label_attr': {'class': 'block text-lg font-medium text-gray-700'}}) }}
+                    {{ form_label(Form.title, 'Title', {'label_attr': {'class': 'block text-lg font-medium text-neon-green-light'}}) }}
                     {{ form_widget(Form.title, {'attr': {
-                        'class': 'mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500',
-                        'placeholder': 'Write a captivating title...'
+                        'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green',
+                        'placeholder': '             Write a captivating title...'
                     }}) }}
                 </div>
 
                 <!-- Featured Image -->
                 <div class="space-y-2">
-                    {{ form_label(Form.featuredImage, 'Cover Image', {'label_attr': {'class': 'block text-lg font-medium text-gray-700'}}) }}
-                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-purple-500 transition-colors">
+                    {{ form_label(Form.featuredImage, 'Cover Image', {'label_attr': {'class': 'block text-lg font-medium text-neon-green-light'}}) }}
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-700 border-dashed rounded-lg hover:border-neon-green transition-all">
                         <div class="space-y-2 text-center">
                             <div class="preview mb-4">
                                 <img src="" alt="" class="mx-auto max-h-64 rounded-lg hidden">
                             </div>
-                            <div class="flex text-sm text-gray-600">
-                                <label class="relative cursor-pointer bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus-within:outline-none">
+                            <div class="flex text-sm text-neon-green-light">
+                                <label class="relative cursor-pointer bg-gray-700 rounded-md font-medium text-neon-green hover:text-neon-green-light focus-within:outline-none">
                                     {{ form_widget(Form.featuredImage, {'attr': {
                                         'class': 'sr-only',
                                         'onchange': 'previewImage(event)'
@@ -50,85 +50,71 @@
 
                 <!-- Content Editor -->
                 <div class="space-y-2">
-                    {{ form_label(Form.content, 'Story', {'label_attr': {'class': 'block text-lg font-medium text-gray-700'}}) }}
+                    {{ form_label(Form.content, 'Story', {'label_attr': {'class': 'block text-lg font-medium text-neon-green-light'}}) }}
                     {{ form_widget(Form.content, {'attr': {
-                        'class': 'mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 min-h-[200px]',
+                        'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green min-h-[200px]',
                         'placeholder': 'Tell your story...'
                     }}) }}
                 </div>
 
                 <!-- Section Divider -->
-        <div class="relative py-6">
-            <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                <div class="w-full border-t border-gray-200"></div>
-            </div>
-            <div class="relative flex justify-center">
-                <span class="bg-white px-3 text-sm text-gray-500 font-medium">Categorize Your Story</span>
-            </div>
-        </div>
-
-        <!-- Categories Section -->
-        <div class="space-y-2 p-6 bg-gray-50 rounded-xl hover:bg-gray-50/80 transition-all duration-300">
-            <div class="flex items-center justify-between mb-2">
-                {{ form_label(Form.categories, 'Topics', {
-                    'label_attr': {
-                        'class': 'block text-lg font-medium text-gray-700 flex items-center gap-2'
-                    }
-                }) }}
-                <span class="text-sm text-gray-500">Choose relevant topics for your story</span>
-            </div>
-            <div class="relative group">
-                {{ form_widget(Form.categories, {
-                    'attr': {
-                        'class': 'mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 hover:border-purple-400 transition-colors duration-200',
-                        'data-placeholder': 'Select categories'
-                    }
-                }) }}
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400 group-hover:text-purple-500">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
+                <div class="relative py-6">
+                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div class="w-full border-t border-gray-700"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <span class="bg-gray-900 px-3 text-sm text-neon-green font-medium">Categorize Your Story</span>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Tags Section -->
-        <div class="space-y-2 p-6 bg-gray-50 rounded-xl mt-6 hover:bg-gray-50/80 transition-all duration-300">
-            <div class="flex items-center justify-between mb-2">
-                {{ form_label(Form.keywords, 'Tags', {
-                    'label_attr': {
-                        'class': 'block text-lg font-medium text-gray-700 flex items-center gap-2'
-                    }
-                }) }}
-                <span class="text-sm text-gray-500">Add up to 5 tags</span>
-            </div>
-            <div class="relative group">
-                {{ form_widget(Form.keywords, {
-                    'attr': {
-                        'class': 'mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 hover:border-purple-400 transition-colors duration-200',
-                        'placeholder': 'e.g., technology, programming, design'
-                    }
-                }) }}
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400 group-hover:text-purple-500">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-                    </svg>
+                <!-- Categories Section -->
+                <div class="space-y-2 p-6 bg-gray-900 rounded-xl border border-gray-700 hover:bg-gray-800/80 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        {{ form_label(Form.categories, 'Topics', {
+                            'label_attr': {
+                                'class': 'block text-lg font-medium text-neon-green-light'
+                            }
+                        }) }}
+                        <span class="text-sm text-gray-400">Choose relevant topics for your story</span>
+                    </div>
+                    <div class="relative group">
+                        {{ form_widget(Form.categories, {
+                            'attr': {
+                                'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green hover:border-neon-green transition-colors',
+                                'data-placeholder': 'Select categories'
+                            }
+                        }) }}
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400 group-hover:text-neon-green">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="mt-2 flex flex-wrap gap-2">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
-                    Sample Tag
-                    <button type="button" class="ml-1 inline-flex text-purple-600 hover:text-purple-900">
-                        <span class="sr-only">Remove tag</span>
-                        &times;
-                    </button>
-                </span>
-            </div>
-        </div>
+
+                <!-- Tags Section -->
+                <div class="space-y-2 p-6 bg-gray-900 rounded-xl mt-6 border border-gray-700 hover:bg-gray-800/80 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        {{ form_label(Form.keywords, 'Tags', {
+                            'label_attr': {
+                                'class': 'block text-lg font-medium text-neon-green-light'
+                            }
+                        }) }}
+                        <span class="text-sm text-gray-400">Add up to 5 tags</span>
+                    </div>
+                    <div class="relative group">
+                        {{ form_widget(Form.keywords, {
+                            'attr': {
+                                'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green hover:border-neon-green transition-colors',
+                                'placeholder': 'e.g., technology, programming, design'
+                            }
+                        }) }}
+                    </div>
+                </div>
 
                 <!-- Submit Button -->
                 <div class="flex justify-end pt-4">
-                    <button type="submit" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-medium rounded-lg shadow-sm hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all">
+                    <button type="submit" class="px-6 py-3 bg-gradient-to-r from-neon-green to-green-600 text-white font-medium rounded-lg shadow-sm hover:from-green-500 hover:to-neon-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neon-green transition-all">
                         Publish Story
                     </button>
                 </div>
