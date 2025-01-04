@@ -72,36 +72,31 @@
                         </div>
 
                         <!-- Categories Section -->
-                        <div class="space-y-2 p-6 bg-gray-900 rounded-xl border border-gray-700 hover:bg-gray-800/80 transition-all duration-300">
-                            <div class="flex items-center justify-between mb-2">
+                        <div class="space-y-4 p-6 bg-gray-900 rounded-xl border border-gray-700 hover:border-green-500 transition-all duration-300 shadow-lg">
+                            <div class="flex items-center justify-between">
                                 {{ form_label(Form.categories, 'Topics', {
                                     'label_attr': {
-                                        'class': 'block text-lg font-medium text-neon-green-light'
+                                        'class': 'text-xl font-bold text-green-400 tracking-wide'
                                     }
                                 }) }}
-                                <span class="text-sm text-gray-400">Choose relevant topics for your story</span>
+                                <span class="text-sm text-gray-400">Choose relevant topics</span>
                             </div>
                             <div class="relative group">
                                 {{ form_widget(Form.categories, {
                                     'attr': {
-                                        'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green hover:border-neon-green transition-colors',
+                                        'class': 'block w-full rounded-lg border-2 border-gray-700 bg-gray-800 text-green-300 shadow-sm focus:border-green-500 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 hover:border-green-400 transition-colors duration-300 appearance-none',
                                         'data-placeholder': 'Select categories'
                                     }
                                 }) }}
-                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400 group-hover:text-neon-green">
-                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
                             </div>
                         </div>
 
                         <!-- Tags Section -->
-                        <div class="space-y-2 p-6 bg-gray-900 rounded-xl mt-6 border border-gray-700 hover:bg-gray-800/80 transition-all duration-300">
-                            <div class="flex items-center justify-between mb-2">
+                        <div class="space-y-4 p-6 bg-gray-900 rounded-xl mt-6 border border-gray-700 hover:border-green-500 transition-all duration-300 shadow-lg">
+                            <div class="flex items-center justify-between">
                                 {{ form_label(Form.keywords, 'Tags', {
                                     'label_attr': {
-                                        'class': 'block text-lg font-medium text-neon-green-light'
+                                        'class': 'text-xl font-bold text-green-400 tracking-wide'
                                     }
                                 }) }}
                                 <span class="text-sm text-gray-400">Add up to 5 tags</span>
@@ -109,12 +104,19 @@
                             <div class="relative group">
                                 {{ form_widget(Form.keywords, {
                                     'attr': {
-                                        'class': 'mt-1 block w-full rounded-lg border-gray-700 bg-gray-900 text-neon-green-light shadow-sm focus:border-neon-green focus:ring-neon-green hover:border-neon-green transition-colors',
+                                        'class': 'block w-full rounded-lg border-2 border-gray-700 bg-gray-800 text-green-300 shadow-sm focus:border-green-500 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 hover:border-green-400 transition-colors duration-300 placeholder-gray-500',
                                         'placeholder': 'e.g., technology, programming, design'
                                     }
                                 }) }}
                             </div>
                         </div>
+
+                        <style>
+                            /* Custom styles for select and input glow effect */
+                            select:focus, input:focus {
+                                box-shadow: 0 0 5px theme('colors.green.500'), 0 0 10px theme('colors.green.500');
+                            }
+                        </style>
 
                         <!-- Submit Button -->
                         <div class="flex justify-end pt-4">

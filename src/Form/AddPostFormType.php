@@ -47,14 +47,17 @@ class AddPostFormType extends AbstractType
             ])
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
-                'choice_label' => 'name',
+                'choice_label' => function($category) {
+                return '  -   ' . $category->getName() . '  -  ' ; // Concatenating name and description
+                },
                 'multiple' => true,
                 'expanded' =>true
-                
             ])
             ->add('keywords', EntityType::class, [
                 'class' => Keywords::class,
-                'choice_label' => 'name',
+                'choice_label' => function($key) {
+                    return '  -   ' . $key->getName() . '  -  ' ;
+                },
                 'multiple' => true,
                 'expanded' =>true
             ])
