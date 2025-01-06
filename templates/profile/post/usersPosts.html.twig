@@ -39,22 +39,43 @@
                             </h3>
                             <p class="text-sm text-gray-400">By {{ post.users.nickname }}</p>
 
-                            <div class="mt-4 flex justify-between space-x-2">
+                            <div class="flex justify-between items-center mt-4">
                                 <a href="{{ path('app_profile_post_update', { id: post.id }) }}" 
-                                   class="px-6 py-2 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 text-white text-sm font-semibold rounded-lg shadow-md hover:from-gray-700 hover:via-gray-600 hover:to-gray-800 transition duration-300 ease-in-out">
-                                    Edit
+                                class="p-3 text-blue-500 hover:text-blue-600 hover:bg-blue-100 rounded-full transition-colors duration-200"
+                                aria-label="Edit post">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
                                 </a>
-                                <form action="{{ path('app_profile_post_delete', { id: post.id }) }}" 
-                                      method="POST" 
-                                      onsubmit="return confirm('Are you sure you want to delete this post?');" 
-                                      class="inline-block">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
-                                    <button type="submit" 
-                                            class="px-6 py-2 bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white text-sm font-semibold rounded-lg shadow-md hover:from-gray-800 hover:via-gray-700 hover:to-gray-900 transition duration-300 ease-in-out">
-                                        Delete
-                                    </button>
-                                </form>
+                                
+                                <button type="button" 
+                                        class="p-3 text-red-500 hover:text-red-600 hover:bg-red-100 rounded-full transition-colors duration-200"
+                                        aria-label="Delete post"
+                                        onclick="confirmDelete('{{ path('app_profile_post_delete', { id: post.id }) }}', '{{ csrf_token('delete' ~ post.id) }}')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
                             </div>
+
+                            <script>
+                            function confirmDelete(deleteUrl, csrfToken) {
+                                if (confirm('Are you sure you want to delete this post?')) {
+                                    const form = document.createElement('form');
+                                    form.method = 'POST';
+                                    form.action = deleteUrl;
+                                    
+                                    const csrfInput = document.createElement('input');
+                                    csrfInput.type = 'hidden';
+                                    csrfInput.name = '_token';
+                                    csrfInput.value = csrfToken;
+                                    
+                                    form.appendChild(csrfInput);
+                                    document.body.appendChild(form);
+                                    form.submit();
+                                }
+                            }
+                            </script>
                         </div>
                     </article>
                 {% else %}

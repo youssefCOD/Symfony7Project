@@ -18,7 +18,7 @@ class HomepageController extends AbstractController
         //here we are selecting latest 8 posts
         $posts = $postsRepository->findBy([], ['id' => 'desc'], 8);
 
-        $users = $usersRepository->getUsersByPosts(4);
+        $users = $usersRepository->getUsersByPosts(4);//getting just the 4 latest users
         return $this->render('homepage/index.html.twig', compact('lastPost','posts','users'));
     }
 }
