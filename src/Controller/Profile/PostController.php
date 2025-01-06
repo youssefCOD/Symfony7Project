@@ -109,5 +109,21 @@ class PostController extends AbstractController
         return $this->redirectToRoute('app_profile_post_index');
     }
 
+
+
+    //the users post:
+    #[Route('/my-posts', name: 'my_posts')]
+    public function myPosts(PostsRepository $postsRepository): Response
+    {
+        // Get the current user
+        $user = $this->getUser();
+
+        // Fetch posts authored by the current user
+        $posts = $postsRepository->findBy(['users' => $user], ['id' => 'desc']);
+
+        return $this->render('profile/post/usersPosts.html.twig', compact('posts'));
+    }
+
+
 }
 

@@ -13,8 +13,8 @@
                 {% set navItems = [
                     {path: 'app_homepage', icon: 'home', text: 'Accueil'},
                     {path: 'app_profile_post_index', icon: 'newspaper', text: 'Posts'},
-                    {path: 'app_login', icon: 'sign-in-alt', text: 'Login'},
-                    {path: 'app_register', icon: 'user-plus', text: 'Register'}
+                    {path: 'app_profile_post_my_posts', icon: 'newspaper', text: 'My Posts'},
+                    {path: 'app_profile', icon: 'newspaper', text: 'Profile'}
                 ] %}
 
                 {% for item in navItems %}
@@ -25,14 +25,15 @@
                 {% endfor %}
             </div>
 
-            <!-- Search and Profile Icons -->
-            <div class="hidden sm:flex items-center space-x-4">
-                <button class="p-2 rounded-full text-gray-400 hover:text-green-400 focus:outline-none focus:ring-2 focus:ring-green-500">
-                    <i class="fas fa-search h-6 w-6"></i>
-                </button>
-                <button class="p-2 rounded-full bg-gray-800 hover:bg-green-800 text-gray-400 hover:text-green-400 focus:outline-none focus:ring-2 focus:ring-green-500">
-                    <i class="fas fa-user-circle h-8 w-8"></i>
-                </button>
+            <!-- User Authentication Section -->
+            <div class="hidden sm:flex sm:items-center space-x-6">
+                {% if app.user %}
+                    <span class="text-gray-300 text-base">{{ app.user.userIdentifier }}</span>
+                    <a href="{{ path('app_logout') }}" class="text-gray-400 hover:text-green-400 text-base font-medium">Logout</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="text-gray-400 hover:text-green-400 text-base font-medium">Login</a>
+                    <a href="{{ path('app_register') }}" class="text-gray-400 hover:text-green-400 text-base font-medium">Register</a>
+                {% endif %}
             </div>
 
             <!-- Mobile Menu Button -->
@@ -55,57 +56,13 @@
                     {{ item.text }}
                 </a>
             {% endfor %}
-        </div>
-    </div>
-
-    <!-- New User Info Button -->
-    <button id="user-info-button" class="fixed top-4 right-4 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full p-3 shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 flex items-center justify-center">
-        <i class="fas fa-user-alt text-xl"></i>
-        <span class="sr-only">User Info</span>
-    </button>
-
-    <!-- User Info Popup -->
-    <div id="user-info-popup" class="hidden fixed top-16 right-4 z-50 bg-white rounded-lg shadow-xl p-4 w-64 transition-all duration-300">
-        <div class="text-gray-800">
             {% if app.user %}
-                <h3 class="font-bold text-lg mb-2">{{ app.user.userIdentifier }}</h3>
-                <p class="text-sm text-gray-600 mb-2">Logged in</p>
-                <a href="{{ path('app_logout') }}" class="block text-center bg-red-500 hover:bg-red-600 text-white rounded px-4 py-2 transition-colors duration-300">Logout</a>
+                <span class="block pl-4 pr-4 py-2 text-base text-gray-300">{{ app.user.userIdentifier }}</span>
+                <a href="{{ path('app_logout') }}" class="block pl-4 pr-4 py-2 text-base font-medium bg-red-500 hover:bg-red-600 text-white">Logout</a>
             {% else %}
-                <h3 class="font-bold text-lg mb-2">Guest</h3>
-                <p class="text-sm text-gray-600 mb-2">Not logged in</p>
-                <a href="{{ path('app_login') }}" class="block text-center bg-green-500 hover:bg-green-600 text-white rounded px-4 py-2 transition-colors duration-300">Login</a>
+                <a href="{{ path('app_login') }}" class="block pl-4 pr-4 py-2 text-base font-medium text-gray-400 hover:bg-green-900 hover:text-green-400">Login</a>
+                <a href="{{ path('app_register') }}" class="block pl-4 pr-4 py-2 text-base font-medium text-gray-400 hover:bg-green-900 hover:text-green-400">Register</a>
             {% endif %}
         </div>
     </div>
 </nav>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuOpenIcon = document.getElementById('menu-open-icon');
-        const menuCloseIcon = document.getElementById('menu-close-icon');
-
-        mobileMenuButton.addEventListener('click', function() {
-            mobileMenu.classList.toggle('hidden');
-            menuOpenIcon.classList.toggle('hidden');
-            menuCloseIcon.classList.toggle('hidden');
-        });
-
-        // New User Info Button Functionality
-        const userInfoButton = document.getElementById('user-info-button');
-        const userInfoPopup = document.getElementById('user-info-popup');
-
-        userInfoButton.addEventListener('click', function() {
-            userInfoPopup.classList.toggle('hidden');
-        });
-
-        // Close popup when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!userInfoButton.contains(event.target) && !userInfoPopup.contains(event.target)) {
-                userInfoPopup.classList.add('hidden');
-            }
-        });
-    });
-</script>
