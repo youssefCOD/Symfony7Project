@@ -8,9 +8,14 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libzip-dev \
     wget \
+    curl \
     gnupg \
     nodejs \
     npm
+
+# Install Node.js LTS
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
 
 # Install Symfony CLI
 RUN wget https://get.symfony.com/cli/installer -O - | bash
@@ -35,24 +40,22 @@ WORKDIR /var/www
 COPY . .
 
 # Fix permissions for Symfony directories
-RUN mkdir -p var/cache var/log
-RUN chown -R www-data:www-data /var/www/var
-RUN chmod -R 775 /var/www/var
+RUN mkdir -p var/cache var/log public/build
+RUN chown -R www-data:www-data var/cache var/log public/build
 
-# Add permissions for the asset_mapper directory specifically
-RUN mkdir -p var/cache/prod/asset_mapper
-RUN chown -R www-data:www-data /var/www/var/cache/prod
-RUN chmod -R 775 /var/www/var/cache/prod
-
-# Install dependencies with proper permissions
+# Install PHP dependencies
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
 
 # Build assets with Webpack Encore
 RUN npm install
 RUN npm run build
 
+# Warm up Symfony cache
+RUN php bin/console cache:clear --env=prod --no-debug
+RUN php bin/console cache:warmup --env=prod --no-debug
+
 # Fix permissions for public/build directory
-RUN chown -R www-data:www-data /var/www/public/build
+RUN chown -R www-data:www-data var/cache var/log public/build
 
 # Configure Apache DocumentRoot
 ENV APACHE_DOCUMENT_ROOT=/var/www/public
@@ -64,7 +67,6 @@ RUN echo '<Directory ${APACHE_DOCUMENT_ROOT}>\n\
     AllowOverride All\n\
     Require all granted\n\
 </Directory>' > /etc/apache2/conf-available/symfony.conf
-
 RUN a2enconf symfony
 
 # Start script
