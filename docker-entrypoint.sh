@@ -13,5 +13,9 @@ fi
 # Install assets
 php bin/console assets:install
 
+# Ensure proper permissions on runtime
+chmod -R 777 /var/www/var
+chown -R www-data:www-data /var/www/var
+
 # Start Apache
 exec "$@"

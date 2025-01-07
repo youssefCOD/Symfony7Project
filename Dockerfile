@@ -31,23 +31,27 @@ RUN a2enmod rewrite
 # Set working directory
 WORKDIR /var/www
 
+# Create a non-root user with same UID/GID as the host user
+RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
+
 # Copy project files
-COPY . .
+COPY --chown=www-data:www-data . .
 
-# Fix permissions for Symfony directories
-RUN mkdir -p var/cache var/log
-RUN chown -R www-data:www-data /var/www/var
-RUN chmod -R 775 /var/www/var
+# Switch to www-data user for subsequent operations
+USER www-data
 
-# Install dependencies with proper permissions
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
+# Create directories with correct permissions
+RUN mkdir -p var/cache var/log public/build
+
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader
 
 # Build assets with Webpack Encore
 RUN npm install
 RUN npm run build
 
-# Fix permissions for public/build directory
-RUN chown -R www-data:www-data /var/www/public/build
+# Switch back to root for Apache configuration
+USER root
 
 # Configure Apache DocumentRoot
 ENV APACHE_DOCUMENT_ROOT=/var/www/public
@@ -59,11 +63,16 @@ RUN echo '<Directory ${APACHE_DOCUMENT_ROOT}>\n\
     AllowOverride All\n\
     Require all granted\n\
 </Directory>' > /etc/apache2/conf-available/symfony.conf
-
 RUN a2enconf symfony
 
+# Ensure proper permissions for the entire application
+RUN chown -R www-data:www-data /var/www
+RUN find /var/www -type f -exec chmod 644 {} \;
+RUN find /var/www -type d -exec chmod 755 {} \;
+RUN chmod -R 777 /var/www/var
+
 # Start script
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY --chown=www-data:www-data docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["docker-entrypoint.sh"]
