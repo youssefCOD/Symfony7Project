@@ -8,7 +8,9 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libzip-dev \
     wget \
-    gnupg
+    gnupg \
+    nodejs \
+    npm
 
 # Install Symfony CLI
 RUN wget https://get.symfony.com/cli/installer -O - | bash
@@ -32,12 +34,20 @@ WORKDIR /var/www
 # Copy project files
 COPY . .
 
+# Fix permissions for Symfony directories
+RUN mkdir -p var/cache var/log
+RUN chown -R www-data:www-data /var/www/var
+RUN chmod -R 775 /var/www/var
+
 # Install dependencies with proper permissions
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www
-RUN chmod -R 755 /var/www
+# Build assets with Webpack Encore
+RUN npm install
+RUN npm run build
+
+# Fix permissions for public/build directory
+RUN chown -R www-data:www-data /var/www/public/build
 
 # Configure Apache DocumentRoot
 ENV APACHE_DOCUMENT_ROOT=/var/www/public
