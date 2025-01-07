@@ -25,7 +25,7 @@ class UsersFixtures extends Fixture
         $newUser = new Users();
 
         $newUser->setNickname('Admin');
-        $newUser->setPassword($this->hasher->hashPassword($newUser, 'azerty'));
+        $newUser->setPassword($this->hasher->hashPassword($newUser, '123456'));
         $newUser->setEmail('admin@demo.fr');
         $newUser->setVerified(true);
         $newUser->setRoles(['ROLE_ADMIN']);
