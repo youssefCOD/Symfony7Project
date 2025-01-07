@@ -1,4 +1,3 @@
-# Dockerfile
 FROM php:8.2-apache
 
 # Install system dependencies
@@ -7,7 +6,13 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libpq-dev \
     libicu-dev \
-    libzip-dev
+    libzip-dev \
+    wget \
+    gnupg
+
+# Install Symfony CLI
+RUN wget https://get.symfony.com/cli/installer -O - | bash
+RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 
 # Install PHP extensions
 RUN docker-php-ext-install \
@@ -27,8 +32,8 @@ WORKDIR /var/www
 # Copy project files
 COPY . .
 
-# Install dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Install dependencies with proper permissions
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www
